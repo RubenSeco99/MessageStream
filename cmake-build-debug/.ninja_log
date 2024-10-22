@@ -1,5 +1,4 @@
 # ninja log v6
-1	12	1729558850934209640	CMakeFiles/MessageStream.dir/Manager/UteisManager.c.o	2562697d12d1f1f4
 1	22	1729558850934209640	CMakeFiles/MessageStream.dir/Mensagem/mensagem.c.o	888e4794fc2c2500
 0	28	1729558850933209649	CMakeFiles/MessageStream.dir/Feed/feed.c.o	b11b06b01d05d6c6
 1	30	1729558850934209640	CMakeFiles/MessageStream.dir/Manager/manager.c.o	b4bee48c3326c084

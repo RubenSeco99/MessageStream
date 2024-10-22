@@ -3,14 +3,7 @@ void fillUsers(USER users[]) {
     for(int i=0;i<MAXUSERS;i++) {
         users[i].pid=-1;
         strcpy(users[i].name,"");
-    }
-}
-void displayUsers(USER users[]) {
-    for(int i=0;i<MAXUSERS;i++) {
-        if(users[i].pid==-1) {
-            printf("Pid: %i\n",users[i].pid);
-            printf("Name: %s\n",users[i].name);
-        }
+        fillTopics(users[i].topics);
     }
 }
 void fillMessages(MESSAGE messages[]) {
@@ -26,6 +19,7 @@ void fillTopics(TOPIC topics[]) {
         strcpy(topics[i].topicName,"\0");
         topics[i].state='u';
         topics[i].persistenceMessages=0;
+        fillMessages(topics[i].mensagens);
     }
 }
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock) {
@@ -44,41 +38,39 @@ int commandHandlerAdminKey(const char *command){
             return (i+1);
     return 0;
 }
-int commandHandlerAdmin(const char *command) {
-    char firstArg[20];
-    char secondArg[20];
-    firstArg[0]='\0';
-    secondArg[0]='\0';
-    int numArgs= snprintf(command,sizeof(command),"%s %s",firstArg,secondArg);
-    if(commandHandlerAdminKey(firstArg)>0) {
-        if(strcmp(firstArg,"users")==0 && numArgs==1){
-            printf("Command users valid");
-            return 1;
-        }else if(strcmp(firstArg,"remove")==0 && numArgs==2) {
-            printf("Command remove valid");
-            return 2;
-        }else if(strcmp(firstArg,"topics")==0 && numArgs==1) {
-            printf("Command topics valid");
-            return 3;
-        }else if(strcmp(firstArg,"show")==0 && numArgs==2) {
-            printf("Command show valid");
-            return 4;
-        }else if(strcmp(firstArg,"lock")==0 && numArgs==2) {
-            printf("Command lock valid");
-            return 5;
-        }else if(strcmp(firstArg,"unlock")==0 && numArgs==2) {
-            printf("Command unlock valid");
-            return 6;
-        }else if(strcmp(firstArg,"close")==0 && numArgs==1) {
-            printf("Command close valid");
-            return 7;
-        }else {
-            printf("Command not found\n");
-            return 0;
+int commandHandlerAdmin(const char *firstArg,const int numArgs) {
+    const int key=commandHandlerAdminKey(firstArg);
+    if(key>0) {
+        if(numArgs==1 && (key==1 || key==3 ||key==7)){
+            printf("Command %s valid!\n",firstArg);
+            return key;
         }
-    }else {
+        if(numArgs==2 && (key==2 || key==4 || key==5 || key==6)) {
+            printf("Command %s valid!\n",firstArg);
+            return key;
+        }
+            printf("Command invalid\n");
+            return 0;
+    }
         printf("command invalid\n");
         return 0;
+}
+void commandUsers(USER users[]){
+    for(int i=0;i<MAXUSERS;i++) {
+        if(users[i].pid==-1) {
+            printf("Pid: %i\n",users[i].pid);
+            printf("Name: %s\n",users[i].name);
+        }
     }
-
+}
+void commandRemove(USER users[],char *userName) {//todo
+    for(int i=0;i<MAXUSERS;i++) {
+        if(strcmp(users[i].name,userName)==0) {
+            users[i].pid=-1;
+            strcpy(users[i].name,"");
+            for(int j=0;j<MAXTOPICS;j++) {
+                strcpy(users[i].topics[j].topicName,"");
+            }
+        }
+    }
 }

@@ -1,12 +1,12 @@
 #include "manager.h"
 void *processClientsRequests(void* pdata) {
     sleep(1);
-    printf("Processing requests\n");
+   // printf("Processing requests\n");
 }
 
 void *processMessageTimes(void* pdata) {
     sleep(2);
-    printf("Processing message times\n");
+ //   printf("Processing message times\n");
 }
 
 int main(int argc, char** argv, char** envp) {
@@ -28,22 +28,32 @@ int main(int argc, char** argv, char** envp) {
 
     printf("Main\n");
     TDATA td[NTHREADSSERVER];
-    fillThreadsInfo(tid,users,topics,&lock);
+    fillThreadsInfo(td,users,topics,&lock);
     pthread_create(&tid[0],NULL,processClientsRequests,&td[0]);
     pthread_create(&tid[1],NULL,processMessageTimes,&td[1]);
 
-    char command[20];
+    char command[60];
     while (true) {
-
-        printf("Insert command");
-        scanf("%s",command);
-        int key=commandHandlerAdmin(command);
-        printf("%d",key);
-        if(key==7) {
+        printf("Insert command: ");
+        if (fgets(command, sizeof(command), stdin) == NULL)
+            continue;
+        command[strcspn(command, "\n")] = '\0';
+        char firstArg[20];
+        char secondArg[20];
+        char thirdArg[20];
+        firstArg[0]='\0';
+        secondArg[0]='\0';
+        thirdArg[0]='\0';
+        int numArgs= sscanf(command,"%19s %19s [%99]s",firstArg,secondArg,thirdArg);
+        printf("%s\n",firstArg);
+        printf("numArgs:%d\n",numArgs);
+        int key=commandHandlerAdmin(firstArg,numArgs);
+        fflush(stdin);
+        if(key==7 && numArgs==1) {
             break;
         }
     }
-    printf("bye bye");
+    printf("\nbye bye");
     for(int i=0; i<NTHREADSSERVER; i++){
         pthread_join(tid[i],NULL);
     }

@@ -19,11 +19,6 @@
 #define NTHREADSSERVER 2
 #define NTHREADSCLIENTS 1
 typedef struct {
-    char name[100];
-    int pid;
-    char topics[20][20];
-}USER;
-typedef struct {
     char topicName[20];
     char body[300];
     int duration;
@@ -32,6 +27,11 @@ typedef struct {
     char topicName[20];
     int persistenceMessages;
     char state;//block/unblock
-    MESSAGE mensagens[5];
+    MESSAGE mensagens[5];//adicionar mensagnes nao persistentes e estas sao persistentes
 }TOPIC;
+typedef struct {
+    char name[100];
+    int pid;
+    TOPIC topics[20];
+}USER;
 #endif //FIFO_H

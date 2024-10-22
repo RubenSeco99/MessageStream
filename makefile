@@ -11,7 +11,7 @@ Feed/feed.o: Feed/feed.c
 manager: Manager/manager.o Manager/uteisManager.o
 	MSG_FICH=$(MSG_FICH) gcc -o manager Manager/manager.o
 
-Manager/manager.o: Manager/manager.c
+Manager/manager.o: Manager/manager.c Manager/uteisManager.c
 	gcc -c Manager/manager.c -o Manager/manager.o
 
 Manager/uteisManager.o: Manager/uteisManager.c

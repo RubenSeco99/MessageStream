@@ -14,6 +14,6 @@ void fillMessages(MESSAGE messages[]);
 void fillTopics(TOPIC topics[]);
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock);
 int commandHandlerAdminKey(const char *command);
-int commandHandler(const char *command);
+int commandHandler(const char *firstArg, int numArgs);
 
 #endif //UTEISMANAGER_H
