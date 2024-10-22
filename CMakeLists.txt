@@ -9,4 +9,10 @@ add_library(MessageStream STATIC
         Mensagem/mensagem.h
         Mensagem/mensagem.c
         Manager/manager.h
-        Manager/manager.c)
+        Manager/manager.c
+        fifo.h
+        Manager/uteisManager.c
+        Manager/uteisManager.h
+        Feed/uteisFeed.c
+        Feed/uteisFeed.h
+)

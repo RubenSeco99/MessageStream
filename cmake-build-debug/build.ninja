@@ -67,6 +67,18 @@ build CMakeFiles/MessageStream.dir/Manager/manager.c.o: C_COMPILER__MessageStrea
   OBJECT_DIR = CMakeFiles/MessageStream.dir
   OBJECT_FILE_DIR = CMakeFiles/MessageStream.dir/Manager
 
+build CMakeFiles/MessageStream.dir/Manager/uteisManager.c.o: C_COMPILER__MessageStream_unscanned_Debug /home/ruben/Desktop/SOProject/MessageStream/Manager/uteisManager.c || cmake_object_order_depends_target_MessageStream
+  DEP_FILE = CMakeFiles/MessageStream.dir/Manager/uteisManager.c.o.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/MessageStream.dir
+  OBJECT_FILE_DIR = CMakeFiles/MessageStream.dir/Manager
+
+build CMakeFiles/MessageStream.dir/Feed/uteisFeed.c.o: C_COMPILER__MessageStream_unscanned_Debug /home/ruben/Desktop/SOProject/MessageStream/Feed/uteisFeed.c || cmake_object_order_depends_target_MessageStream
+  DEP_FILE = CMakeFiles/MessageStream.dir/Feed/uteisFeed.c.o.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/MessageStream.dir
+  OBJECT_FILE_DIR = CMakeFiles/MessageStream.dir/Feed
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target MessageStream
@@ -75,7 +87,7 @@ build CMakeFiles/MessageStream.dir/Manager/manager.c.o: C_COMPILER__MessageStrea
 #############################################
 # Link the static library libMessageStream.a
 
-build libMessageStream.a: C_STATIC_LIBRARY_LINKER__MessageStream_Debug CMakeFiles/MessageStream.dir/Feed/feed.c.o CMakeFiles/MessageStream.dir/Mensagem/mensagem.c.o CMakeFiles/MessageStream.dir/Manager/manager.c.o
+build libMessageStream.a: C_STATIC_LIBRARY_LINKER__MessageStream_Debug CMakeFiles/MessageStream.dir/Feed/feed.c.o CMakeFiles/MessageStream.dir/Mensagem/mensagem.c.o CMakeFiles/MessageStream.dir/Manager/manager.c.o CMakeFiles/MessageStream.dir/Manager/uteisManager.c.o CMakeFiles/MessageStream.dir/Feed/uteisFeed.c.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/MessageStream.dir
   POST_BUILD = :

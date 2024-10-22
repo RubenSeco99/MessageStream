@@ -1,8 +1,6 @@
-#ifndef MESSAGESTREAM_LIBRARY_H
-#define MESSAGESTREAM_LIBRARY_H
-#include <stdio.h>
-#include <stdlib.h>
-
+#ifndef MANAGER_H
+#define MANAGER_H
+#include "uteisManager.c"
 /*
  Nome tópico max 20 caracteres(uma palavra)
  Corpo mensagem max 300 caracteres
@@ -10,4 +8,4 @@
  Utilizador Criador(username)
  */
 
-#endif //MESSAGESTREAM_LIBRARY_H
+#endif

@@ -1,12 +1,12 @@
  -- Requisitos estruturais --
   Criar Feed❌
   Criar Mannager❌
-  Criar Pipe❌
+  Criar Pipe✅
   Criar struct para enviar/receber pedidos
-  Criar Thread no feed para receber pedidos❌
-  Criar Main para receber inputs e enviar pedidos❌
+  Criar Thread Cliente no feed para receber pedidos❌
+  Criar Main Cliente para receber inputs e enviar pedidos❌
   Criar Thread no Manager para contar o tempo do array das mensagens❌
-  Criar Thread no servidor para atender os clientes❌
+  Criar Thread no Manager para atender os clientes❌
   Criar Main no Manager receber inputs(exit)❌
   Criar variável ambiente para o nome do ficheiro(MSG_FICH)✅
   -- Requisitos funcionais --
@@ -25,6 +25,7 @@
 
   Utilizadores:
       Cliente:
+          Garantir que só funciona quando há um manager ativo✅
           Não interage com outros utilizadores❌
           Subscreve topicos❌
           Envia mensagens❌
@@ -48,3 +49,8 @@
       Máximo 10 utilizadores;
       Máximo 20 tópicos;
       Máximo 5 mensagens por tópico;
+
+  Realçar:
+     O corpo da mensagem pode ter até 300 carateres, podendo, no entanto, ser significativamente menor. Uma solução
+     que envie apenas a parte (os caracteres) efetivamente usada pela mensagem, evitando o envio de caracteres não
+     usados, terá uma avaliação superior às soluções que simplesmente enviam mensagens sempre do tamanho máximo.
