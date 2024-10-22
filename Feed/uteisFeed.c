@@ -1,5 +1,5 @@
 #include "uteisFeed.h";
-int CommandHandlerUser(char *command){
+int CommandHandlerUserKey(char *command){
     char *commands[]= {"topics","msg","subscribe","unsubscribe","exit"};
     int NumCommands = sizeof(commands) / sizeof(commands[0]);
     for(int i=0; i < NumCommands;i++)

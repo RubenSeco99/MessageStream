@@ -13,6 +13,7 @@ void displayUsers(USER users[]);
 void fillMessages(MESSAGE messages[]);
 void fillTopics(TOPIC topics[]);
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock);
-int commandHandlerAdmin(const char *command);
+int commandHandlerAdminKey(const char *command);
+int commandHandler(const char *command);
 
 #endif //UTEISMANAGER_H
