@@ -26,7 +26,7 @@ void fillTopics(TOPIC topics[]) {
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock) {
     for(int i=0;i<NTHREADSSERVER;i++) {
         threads[i].mutex=lock;
-        threads[i].running=1;
+        threads[i].running=true;
         threads[i].users=users;
         threads[i].topics=topics;
     }
@@ -101,7 +101,7 @@ void commandChangeTopicState(TOPIC topics[],const char *topicName,const char *ne
 void commandClose(TDATA td[]){
     for(int i=0;i<NTHREADSSERVER;i++)
         if(td[i].running)
-            td[i].running=0;
+            td[i].running=false;
     printf("Closing...\n");
 }
 

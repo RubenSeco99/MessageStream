@@ -2,6 +2,7 @@
 void *processServerResponses(void* pdata) {
     sleep(1);
     printf("Processing server responses\n");
+    return 0;
 }
 int main(int argc, char**argv, char **envp){
     if(access(SRV_FIFO,F_OK) != 0){

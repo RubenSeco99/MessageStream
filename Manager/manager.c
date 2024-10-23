@@ -1,12 +1,15 @@
 #include "manager.h"
 void *processClientsRequests(void* pdata) {
     sleep(1);
-   // printf("Processing requests\n");
+   // printf("Processing requests\n");Comand
+    return 0;
 }
 
 void *processMessageTimes(void* pdata) {
+    TDATA *ptd = (TDATA *) pdata;//cast because the thread receive generic pointer
     sleep(2);
  //   printf("Processing message times\n");
+    return 0;
 }
 
 int main(int argc, char** argv, char** envp) {
@@ -32,15 +35,15 @@ int main(int argc, char** argv, char** envp) {
     pthread_create(&tid[0],NULL,processClientsRequests,&td[0]);
     pthread_create(&tid[1],NULL,processMessageTimes,&td[1]);
 
+    char firstArg[20];
+    char secondArg[20];
+    char thirdArg[20];
     char command[60];
     while (true) {
         printf("Insert command: ");
         if (fgets(command, sizeof(command), stdin) == NULL)
             continue;
         command[strcspn(command, "\n")] = '\0';
-        char firstArg[20];
-        char secondArg[20];
-        char thirdArg[20];
         firstArg[0]='\0';
         secondArg[0]='\0';
         thirdArg[0]='\0';
@@ -53,10 +56,11 @@ int main(int argc, char** argv, char** envp) {
             break;
         }
     }
-    printf("\nbye bye");
-    for(int i=0; i<NTHREADSSERVER; i++){
+    for(int i=0;i<NTHREADSSERVER;i++)
+        td[i].running=false;
+    for(int i=0; i<NTHREADSSERVER; i++)
         pthread_join(tid[i],NULL);
-    }
+    printf("\nManager going off");
     pthread_mutex_destroy(&lock);
     unlink(SRV_FIFO);
     return 0;

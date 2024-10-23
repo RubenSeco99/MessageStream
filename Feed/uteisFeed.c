@@ -8,7 +8,6 @@ int CommandHandlerUserKey(const char *command){
             return (i+1);
     return 0;
 }
-
 int commandHandlerUser(const char *firstArg,const int numArgs) {
     const int key=CommandHandlerUserKey(firstArg);
     if(key>0) {
