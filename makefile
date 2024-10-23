@@ -2,11 +2,14 @@ MSG_FICH = DataMensagens.txt
 
 all: feed manager mensagem
 
-feed: Feed/feed.o
+feed: Feed/feed.o Feed/uteisFeed.o
 	gcc -o feed Feed/feed.o
 
-Feed/feed.o: Feed/feed.c
+Feed/feed.o: Feed/feed.c Feed/uteisFeed.c
 	gcc -c Feed/feed.c -o Feed/feed.o
+
+Feed/uteisFeed.o: Feed/uteisFeed.c
+	gcc -c Feed/uteisFeed.c -o Feed/uteisFeed.o
 
 manager: Manager/manager.o Manager/uteisManager.o
 	MSG_FICH=$(MSG_FICH) gcc -o manager Manager/manager.o
