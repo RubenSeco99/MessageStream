@@ -3,10 +3,12 @@ void fillUsers(USER users[]) {
     for(int i=0;i<MAXUSERS;i++) {
         users[i].pid=-1;
         strcpy(users[i].name,"");
-        fillTopics(users[i].topics);
+        for(int j=0;j<MAXTOPICS;j++)
+            users[i].topics[j]=NULL;
+
     }
 }
-void fillMessages(MESSAGE messages[]) {
+void fillMessages(MESSAGE messages[],char topicName) {
     for(int i=0;i<MAXMSGPERTOPIC;i++){
         messages[i].duration=-1;
         strcpy(messages[i].body,"\0");
@@ -15,11 +17,10 @@ void fillMessages(MESSAGE messages[]) {
 }
 void fillTopics(TOPIC topics[]) {
     for(int i=0;i<MAXTOPICS;i++) {
-        fillMessages(topics[i].mensagens);
         strcpy(topics[i].topicName,"\0");
+        fillMessages(topics[i].persistentMessages,topics[i].topicName);
         topics[i].state='u';
-        topics[i].persistenceMessages=0;
-        fillMessages(topics[i].mensagens);
+        topics[i].nPersistMessages=0;
     }
 }
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock) {
@@ -63,14 +64,44 @@ void commandUsers(USER users[]){
         }
     }
 }
-void commandRemove(USER users[],char *userName) {//todo
+void commandRemoveUser(USER users[],const char *userName) {//todo
     for(int i=0;i<MAXUSERS;i++) {
         if(strcmp(users[i].name,userName)==0) {
             users[i].pid=-1;
             strcpy(users[i].name,"");
             for(int j=0;j<MAXTOPICS;j++) {
-                strcpy(users[i].topics[j].topicName,"");
+                users[i].topics[j]=NULL;
             }
         }
     }
 }
+void commandTopics(TOPIC topics[]) {
+    printf("Topicos:\n");
+    for(int i=0;i<MAXTOPICS;i++)
+        printf("%s com %d mensagens persistentes\n",topics[i].topicName,topics[i].nPersistMessages);
+}
+void commandShowTopic(TOPIC topics[],const char *topicName) {
+    for(int i=0;i<MAXTOPICS;i++)
+        if(strcmp(topics[i].topicName,topicName)==0)
+            for(int j=0;j<topics[i].nPersistMessages;j++)
+                printf("Mensagem [%d]: %s",j,topics[i].persistentMessages[j].body);
+}
+void commandChangeTopicState(TOPIC topics[],const char *topicName,const char *newState) {
+    for(int i=0;i<MAXTOPICS;i++)
+        if(strcmp(topics[i].topicName,topicName)==0){
+            if(newState[0]==topics[i].state)
+                printf("Topic %s already %s\n", topicName, topics[i].state=='u' ? "unblocked" : "blocked");
+            else if(strcmp(newState,"u")==0)
+                topics[i].state='u';
+            else if(strcmp(newState,"b")==0)
+                topics[i].state='b';
+            return;
+        }
+}
+void commandClose(TDATA td[]){
+    for(int i=0;i<NTHREADSSERVER;i++)
+        if(td[i].running)
+            td[i].running=0;
+    printf("Closing...\n");
+}
+

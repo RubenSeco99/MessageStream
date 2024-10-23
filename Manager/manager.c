@@ -17,10 +17,10 @@ int main(int argc, char** argv, char** envp) {
     }
     mkfifo(SRV_FIFO, 0640);
 
-    USER users[10];
-    TOPIC topics[10];
-    fillUsers(users);
+    USER users[MAXUSERS];
+    TOPIC topics[MAXTOPICS];
     fillTopics(topics);
+    fillUsers(users);
     pthread_mutex_t lock;
 
     pthread_t tid[NTHREADSSERVER];//Guarda o id das threads para depois fazer o create e o join

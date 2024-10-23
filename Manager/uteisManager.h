@@ -10,7 +10,7 @@ typedef struct {
 }TDATA;
 void fillUsers(USER users[]);
 void displayUsers(USER users[]);
-void fillMessages(MESSAGE messages[]);
+void fillMessages(MESSAGE messages[],char topicName);
 void fillTopics(TOPIC topics[]);
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock);
 int commandHandlerAdminKey(const char *command);

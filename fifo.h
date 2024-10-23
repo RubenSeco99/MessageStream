@@ -14,8 +14,8 @@
 #define FIFO_H
 #define SRV_FIFO "server_fifo"
 #define MAXUSERS 10
-#define MAXTOPICS 10
-#define MAXMSGPERTOPIC 10
+#define MAXTOPICS 20
+#define MAXMSGPERTOPIC 15
 #define NTHREADSSERVER 2
 #define NTHREADSCLIENTS 1
 typedef struct {
@@ -25,13 +25,15 @@ typedef struct {
 }MESSAGE;
 typedef struct {
     char topicName[20];
-    int persistenceMessages;
-    char state;//block/unblock
-    MESSAGE mensagens[5];//adicionar mensagnes nao persistentes e estas sao persistentes
+    int nPersistMessages;
+    char state;//block/unblock (b/u)
+    MESSAGE persistentMessages[MAXMSGPERTOPIC];
+    MESSAGE temporaryMessages[MAXUSERS];//existe tantas mensagens temporarias como users,
+    //assumindo que as verificações demoram um segundo cada user so tem tempo de enviar uma mensagem
 }TOPIC;
 typedef struct {
     char name[100];
     int pid;
-    TOPIC topics[20];
+    TOPIC *topics[MAXTOPICS];
 }USER;
 #endif //FIFO_H
