@@ -1,7 +1,17 @@
 #include "feed.h"
 void *processServerResponses(void* pdata) {
-    //int fd = *((int*)pdata);
-    //char response[1024];
+    TDATAUSER *ptd = (TDATAUSER *) pdata;
+    COMUNICACAO p;
+    int fd_manager;
+    while(ptd->running){
+        read(ptd->fd,&p,sizeof(p));
+        printf("Server response: %s\n",p.message);
+        fd_manager=open(p.fd_user,O_WRONLY);
+        if(fd_manager==-1) {
+            printf("Erro ao abrir o manager");
+            continue;
+        }
+    }
     sleep(1);
     printf("Processing server responses\n");
     return 0;

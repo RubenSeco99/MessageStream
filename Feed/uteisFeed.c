@@ -28,53 +28,87 @@ int commandHandlerUser(const char *firstArg,const int numArgs) {
     printf("command invalid\n");
     return 0;
 }
-    bool verificaLogin(COMUNICACAO *p,COMUNICACAO *r,char *nomeFifo) {
-        char nome[20],comando[6];
-        strncpy(comando, "login", sizeof(comando) - 1);
-        comando[sizeof(comando) - 1] = '\0';
-        printf("Indique o seu username: ");
-        scanf("%s",nome);
-        fflush(stdin);
-        strcpy(p->user.name,nome);
-        strcpy(p->command,comando);
+bool verificaLogin(COMUNICACAO *p,COMUNICACAO *r,char *nomeFifo) {
+    char nome[20],comando[6];
+    strncpy(comando, "login", sizeof(comando) - 1);
+    comando[sizeof(comando) - 1] = '\0';
+    printf("Indique o seu username: ");
+    scanf("%s",nome);
+    fflush(stdin);
+    strcpy(p->user.name,nome);
+    strcpy(p->command,comando);
 
-        sprintf(nomeFifo, "FIFO_USER_%d", getpid());
-        if (mkfifo(nomeFifo, 0640) == -1) {
-            printf("Erro ao criar FIFO do cliente");
-            return false;
+    sprintf(nomeFifo, "FIFO_USER_%d", getpid());
+    if (mkfifo(nomeFifo, 0640) == -1) {
+        printf("Erro ao criar FIFO do cliente");
+        return false;
+}
+    int fd = open(SRV_FIFO,O_WRONLY);
+    if(fd == -1) {
+        printf("Erro ao abrir o fifo para escrita\n");
+        unlink(nomeFifo);
+        return false;
     }
-        int fd = open(SRV_FIFO,O_WRONLY);
-        if(fd == -1) {
-            printf("Erro ao abrir o fifo para escrita\n");
-            unlink(nomeFifo);
-            return false;
-        }
-        strncpy(p->fd_user, nomeFifo, sizeof(p->fd_user) - 1);
-        p->fd_user[sizeof(p->fd_user) - 1] = '\0';
-        printf("comando para enviar: %s \n",p->command);
-        if (write(fd, p, sizeof(COMUNICACAO)) == -1) {
-            printf("Erro ao enviar dados para o servidor.\n");
-            close(fd);
-            return false;
-        }
+    strncpy(p->fd_user, nomeFifo, sizeof(p->fd_user) - 1);
+    p->fd_user[sizeof(p->fd_user) - 1] = '\0';
+    printf("comando para enviar: %s \n",p->command);
+    if (write(fd, p, sizeof(COMUNICACAO)) == -1) {
+        printf("Erro ao enviar dados para o servidor.\n");
         close(fd);
-        int fd_resposta = open(nomeFifo, O_RDONLY);
-        if (fd_resposta == -1) {
-            printf("Erro ao abrir FIFO de resposta do cliente.\n");
-            return false;
-        }
-        if (read(fd_resposta, r, sizeof(COMUNICACAO)) == -1) {
-            printf("Erro ao ler resposta do servidor.\n");
-            close(fd_resposta);
-            return false;
-        }
+        return false;
+    }
+    close(fd);
+    int fd_resposta = open(nomeFifo, O_RDONLY);
+    if (fd_resposta == -1) {
+        printf("Erro ao abrir FIFO de resposta do cliente.\n");
+        return false;
+    }
+    if (read(fd_resposta, r, sizeof(COMUNICACAO)) == -1) {
+        printf("Erro ao ler resposta do servidor.\n");
         close(fd_resposta);
-        if(strcmp(r->message,"login bem sucedido")==0) {
-            return true;
-        }
-        if(strcmp(r->message,"login mal sucedido")==0) {
-            printf("Username já em uso.\n");
-            return false;
-        }
+        return false;
+    }
+    close(fd_resposta);
+    if(strcmp(r->message,"login bem sucedido")==0) {
         return true;
     }
+    if(strcmp(r->message,"login mal sucedido")==0) {
+        printf("Username já em uso.\n");
+        return false;
+    }
+    return true;
+}
+
+void commandTopics(TOPIC topics[]) {
+    printf("Topicos:\n");
+    for(int i=0;i<MAXTOPICS;i++) {
+        printf("->%s /nMensagens persistentes: %d", topics[i].topicName, topics[i].nPersistMessages);
+        if(topics[i].state=='b')
+            printf("\nEstado: Bloqueado\n");
+        else
+            printf("\nEstado: Desbloqueado\n");
+    }
+}
+
+void commandMsg(char *secondArg,char *thirdArg,char *fourthArg,char *fifthArg) {
+    printf("Mensagem enviada para o topico %s\n",secondArg);
+    printf("Mensagem: %s\n",thirdArg);
+    printf("Duracao: %s\n",fourthArg);
+    printf("Tipo: %s\n",fifthArg);
+    //Falta fazer aqui a lógica e a comunicação com o servidor
+}
+
+void commandSubscribe(char *secondArg) {
+    printf("Subscrito no topico %s\n",secondArg);
+    //Falta fazer aqui a lógica e a comunicação com o servidor
+}
+
+void commandUnsubscribe(char *secondArg) {
+    printf("Desubscrito do topico %s\n",secondArg);
+    //Falta fazer aqui a lógica e a comunicação com o servidor
+}
+
+void commandClose() {
+    printf("A fechar...\n");
+    //Falta fazer aqui a lógica e a comunicação com o servidor
+}
