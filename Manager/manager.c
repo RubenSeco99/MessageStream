@@ -4,16 +4,26 @@ void *processClientsRequests(void* pdata) {//unica instância
     COMUNICACAO p,r;
     int nbytes,fd_cliente;
     while(ptd->running) {
-        read(ptd->fd,&p,sizeof(p));
-        printf("\nRecebi commando: %s   \n",p.command);
-        strcpy(p.message,"Commando enviado com sucesso");
+        read(ptd->fd,&p,sizeof(p));//do nbytes check
+        //printf("\nRecebi commando: %s   \n",p.command);
         fd_cliente=open(p.fd_user,O_WRONLY);
         if(fd_cliente==-1) {
             printf("Erro ao abrir o cliente");
             continue;
         }
-        write(fd_cliente,&p,sizeof(p));
-        close(fd_cliente);
+        r=p;
+        if(strcmp(p.command,"login")==0){
+            commandResponseLogin(ptd,&r,fd_cliente);
+        }
+        else if(strcmp(p.command,"topics")==0) {
+            strcpy(r.message,"topics received");
+            write(fd_cliente,&r,sizeof(r));
+            close(fd_cliente);
+        }else if(strcmp(p.command,"close")==0) {//fecha a thread com pedido da main
+            printf("Thread Closing\n");
+            close(fd_cliente);
+            ptd->running=false;
+        }
     }
     return 0;
 }
@@ -68,8 +78,13 @@ int main(int argc, char** argv, char** envp) {
         fflush(stdin);
         if(key==7 && numArgs==1) {
             break;
+
         }
     }
+    //simula pedido para saida da thread
+    COMUNICACAO p;
+    strcpy(p.command,"close");
+    write(fd,&p,sizeof(COMUNICACAO));
 
     for(int i=0;i<NTHREADSSERVER;i++)
         td[i].running=false;
@@ -77,7 +92,7 @@ int main(int argc, char** argv, char** envp) {
         pthread_join(tid[i],NULL);
 
     close(fd);
-    printf("\nManager going off");
+    printf("\nManager going off\n");
     pthread_mutex_destroy(&lock);
     unlink(SRV_FIFO);
     return 0;

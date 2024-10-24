@@ -105,4 +105,13 @@ void commandClose(TDATA td[]){
             td[i].running=false;
     printf("Closing...\n");
 }
+void commandResponseLogin(TDATA *ptd,COMUNICACAO *r, const int fd_cliente) {
+    if(strcmp(r->user.name,"ruben")==0)
+        strcpy(r->message,"login bem sucedido");
+    else {
+        strcpy(r->message,"login mal sucedido");
+    }
+    write(fd_cliente,r,sizeof(COMUNICACAO));
+    close(fd_cliente);
 
+}

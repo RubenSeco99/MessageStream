@@ -1,32 +1,32 @@
  -- Requisitos estruturais --
-  Criar Feed❌
-  Criar Mannager❌
+  Criar Feed✅
+  Criar Mannager✅
   Criar Pipe✅
-  Criar struct para enviar/receber pedidos
+  Criar struct para enviar/receber pedidos✅
   Criar Thread Cliente no feed para receber pedidos❌
   Criar Main Cliente para receber inputs e enviar pedidos❌
   Criar Thread no Manager para contar o tempo do array das mensagens❌
-  Criar Thread no Manager para atender os clientes❌
-  Criar Main no Manager receber inputs(exit)❌
+  Criar Thread no Manager para atender os clientes✅
+  Criar Main no Manager receber inputs(exit)✅
   Criar variável ambiente para o nome do ficheiro(MSG_FICH)✅
   -- Requisitos funcionais --
       Login(Unique Username, uma palavra)❌
       Troca de mensagens(Persistentes e não-persistentes)❌
-      Ler mensagens de um ficheiro no inicio do programa manager
-      Escrever mensagens num ficheiro no fim do manager(formato:nomeTopico usernameAutor tempoVida corpoMsg)
+      Ler mensagens de um ficheiro no inicio do programa manager❌
+      Escrever mensagens num ficheiro no fim do manager(formato:nomeTopico usernameAutor tempoVida corpoMsg)❌
   Manager:
       Ler de um ficheiro as mensagens(Manager)❌
       Broadcast de mensagens(segundo Tópico)❌
-      Comando exit❌
-      Mostrar utilizadores ativos❌
-      Expulsar utilizador❌
-      Garantir que só funciona um de cada vez❌
+      Comando close✅
+      Mostrar utilizadores ativos❌✅
+      Expulsar utilizador❌✅
+      Garantir que só funciona um de cada vez✅
       Eliminar mensagens quando expiram❌
 
   Utilizadores:
       Cliente:
           Garantir que só funciona quando há um manager ativo✅
-          Não interage com outros utilizadores❌
+          Não interage com outros utilizadores✅
           Subscreve topicos❌
           Envia mensagens❌
           Obter listagem dos tópicos(*topics*)❌
@@ -36,14 +36,14 @@
           Sair encerrando o feed(*exit*)❌
 
       Administrador:
-          Lança o manager❌
-          Listar utilizadores(*users*)❌
-          Eliminar utilizadores(*remove username*)❌
-          Listar topicos existentes(*topics*, nome e numero de msg)❌
-          Listar mensagens de um tópico(*show nomeTopico*)❌
-          Bloquear um topico(*lock nomeTopico*,deixa de receber novas mensagens)❌
-          Desbloquear um topico(*unlock nomeTopico*)❌
-          Fechar a plataforma(*close*)❌
+          Lança o manager✅
+          Listar utilizadores(*users*)❌✅
+          Eliminar utilizadores(*remove username*)❌✅
+          Listar topicos existentes(*topics*, nome e numero de msg)❌✅
+          Listar mensagens de um tópico(*show nomeTopico*)❌✅
+          Bloquear um topico(*lock nomeTopico*,deixa de receber novas mensagens)❌✅
+          Desbloquear um topico(*unlock nomeTopico*)❌✅
+          Fechar a plataforma(*close*)✅
 
   Assumptions:
       Máximo 10 utilizadores;

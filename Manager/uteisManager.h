@@ -13,7 +13,7 @@ void fillUsers(USER users[]);
 void fillMessages(MESSAGE messages[],char *topicName);
 void fillTopics(TOPIC topics[]);
 void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock,int fd);
-    // -- Comands -- //
+    // -- Comands Manager-- //
 int commandHandlerAdminKey(const char *command);
 int commandHandlerAdmin(const char *firstArg, int numArgs);
 void commandUsers(USER users[]);
