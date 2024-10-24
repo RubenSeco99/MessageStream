@@ -3,15 +3,16 @@
 #include "../fifo.h"
 typedef struct {
     bool running;
+    int fd;
     USER *users;
     TOPIC *topics;
     MESSAGE *msg;
     pthread_mutex_t *mutex;
 }TDATA;
 void fillUsers(USER users[]);
-void fillMessages(MESSAGE messages[],char topicName);
+void fillMessages(MESSAGE messages[],char *topicName);
 void fillTopics(TOPIC topics[]);
-void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock);
+void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock,int fd);
     // -- Comands -- //
 int commandHandlerAdminKey(const char *command);
 int commandHandlerAdmin(const char *firstArg, int numArgs);

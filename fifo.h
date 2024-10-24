@@ -36,4 +36,11 @@ typedef struct {
     int pid;
     TOPIC *topics[MAXTOPICS];
 }USER;
+typedef struct {
+    USER user;
+    char message[20];
+    MESSAGE persistentMessages[MAXUSERS];
+    char command[20];
+    char fd_user[20];
+}COMUNICACAO;
 #endif //FIFO_H

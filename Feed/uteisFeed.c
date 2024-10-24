@@ -28,3 +28,6 @@ int commandHandlerUser(const char *firstArg,const int numArgs) {
     printf("command invalid\n");
     return 0;
 }
+bool verificaLogin(const char *nome,const char *nomeFifo) {
+
+}

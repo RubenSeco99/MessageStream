@@ -8,13 +8,13 @@ void fillUsers(USER users[]) {
 
     }
 }
-void fillMessages(MESSAGE messages[],char topicName) {
+void fillMessages(MESSAGE messages[],char *topicName) {
     for(int i=0;i<MAXMSGPERTOPIC;i++){
         messages[i].duration=-1;
         strcpy(messages[i].body,"\0");
         strcpy(messages[i].topicName,"\0");
     }
-}
+}//verificar logica
 void fillTopics(TOPIC topics[]) {
     for(int i=0;i<MAXTOPICS;i++) {
         strcpy(topics[i].topicName,"\0");
@@ -23,12 +23,13 @@ void fillTopics(TOPIC topics[]) {
         topics[i].nPersistMessages=0;
     }
 }
-void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock) {
+void fillThreadsInfo(TDATA threads[],USER users[],TOPIC topics[],pthread_mutex_t *lock,int fd) {
     for(int i=0;i<NTHREADSSERVER;i++) {
         threads[i].mutex=lock;
         threads[i].running=true;
         threads[i].users=users;
         threads[i].topics=topics;
+        threads[i].fd=fd;
     }
 }
 int commandHandlerAdminKey(const char *command){
